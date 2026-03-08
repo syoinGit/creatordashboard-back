@@ -1,7 +1,7 @@
 import uuid
 
 from ..db.base import Base
-from sqlalchemy import String, DateTime, Boolean
+from sqlalchemy import String, DateTime, Boolean, func
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime, timezone
 
@@ -24,17 +24,17 @@ class MUser(Base):
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=lambda: datetime.now(timezone.utc),
+        server_default=func.now(),
         comment="作成日",
     )
 
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=lambda: datetime.now(timezone.utc),
-        onupdate=lambda: datetime.now(timezone.utc),
+        server_default=func.now(),
+        onupdate=func.now(),
         comment="更新日",
     )
 
     is_deleted: Mapped[bool] = mapped_column(
-        Boolean, default=False, comment="削除フラグ"
+        Boolean, default=False, index=True, comment="削除フラグ"
     )

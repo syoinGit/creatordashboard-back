@@ -3,7 +3,7 @@ import uuid
 from ..db.base import Base
 from sqlalchemy import String, DateTime, Text, Boolean, ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column
-from datetime import datetime, timezone
+from datetime import datetime
 
 
 class TContentProject(Base):

@@ -1,9 +1,9 @@
 import uuid
 
 from ..db.base import Base
-from sqlalchemy import String, Integer, DateTime, ForeignKey, Boolean, func
+from sqlalchemy import String, BigInteger, DateTime, ForeignKey, Boolean, func
 from sqlalchemy.orm import Mapped, mapped_column
-from datetime import datetime, timezone
+from datetime import datetime
 
 
 class TMediaAsset(Base):
@@ -23,6 +23,13 @@ class TMediaAsset(Base):
         comment="素材タイプID",
     )
 
+    project_id: Mapped[str] = mapped_column(
+        String(36),
+        ForeignKey("t_content_projects.project_id"),
+        nullable=False,
+        comment="動画企画ID",
+    )
+
     original_file_name: Mapped[str] = mapped_column(
         String(100), nullable=False, comment="アップロードファイル名"
     )
@@ -30,13 +37,19 @@ class TMediaAsset(Base):
     saved_file_name: Mapped[str] = mapped_column(
         String(100), nullable=False, comment="登録ファイル名"
     )
+    
+    mime_type: Mapped[str] = mapped_column(
+    String(100),
+    nullable=True,
+    comment="MIMEタイプ",
+    )
 
     storage_path: Mapped[str] = mapped_column(
         String(1000), nullable=False, comment="保存ストレージパス"
     )
 
     file_size: Mapped[int] = mapped_column(
-        Integer, nullable=False, comment="ファイルサイズ"
+        BigInteger, nullable=False, comment="ファイルサイズ"
     )
 
     memo: Mapped[str] = mapped_column(String(1000), nullable=True, comment="メモ")

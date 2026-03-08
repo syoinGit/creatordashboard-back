@@ -37,11 +37,11 @@ class TMediaAsset(Base):
     saved_file_name: Mapped[str] = mapped_column(
         String(100), nullable=False, comment="登録ファイル名"
     )
-    
+
     mime_type: Mapped[str] = mapped_column(
-    String(100),
-    nullable=True,
-    comment="MIMEタイプ",
+        String(100),
+        nullable=True,
+        comment="MIMEタイプ",
     )
 
     storage_path: Mapped[str] = mapped_column(

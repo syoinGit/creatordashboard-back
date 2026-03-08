@@ -1,7 +1,7 @@
 import uuid
-from .base  import Base
- 
-from sqlalchemy import String, DateTime
+
+from ..db.base  import Base
+from sqlalchemy import String, DateTime, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime, timezone
 
@@ -18,10 +18,11 @@ class MMediaType (Base):
     media_type_name: Mapped[str] = mapped_column(
     String(50),
     nullable=False,
-    comment="動画タイプ名"
+    unique=True,
+    comment="素材タイプ名"
     )
     
-    discription: Mapped[str] = mapped_column(
+    description: Mapped[str] = mapped_column(
     String(100),
     comment="素材タイプの説明"
     )
@@ -50,3 +51,9 @@ class MMediaType (Base):
         onupdate=lambda: datetime.now(timezone.utc),
         comment='更新日'
         )
+    
+    is_deleted: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True,
+        comment="削除フラグ"
+    )

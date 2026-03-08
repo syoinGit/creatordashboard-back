@@ -1,7 +1,7 @@
 import uuid
-from .base  import Base
- 
-from sqlalchemy import String, DateTime, Text
+
+from ..db.base  import Base 
+from sqlalchemy import String, DateTime, Text, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime, timezone
 
@@ -51,3 +51,9 @@ class TContentProject (Base):
         onupdate=lambda: datetime.now(timezone.utc),
         comment='更新日'
         )
+    
+    is_deleted: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True,
+        comment="削除フラグ"
+    )

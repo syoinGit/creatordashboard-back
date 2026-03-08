@@ -1,7 +1,7 @@
 import uuid
-from .base  import Base
- 
-from sqlalchemy import String, Integer, DateTime, ForeignKey
+
+from ..db.base  import Base 
+from sqlalchemy import String, Integer, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime, timezone
 
@@ -76,3 +76,9 @@ class TMediaAsset (Base):
         onupdate=lambda: datetime.now(timezone.utc),
         comment='更新日'
         )
+    
+    is_deleted: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True,
+        comment="削除フラグ"
+    )

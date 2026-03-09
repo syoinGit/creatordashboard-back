@@ -1,8 +1,6 @@
 from fastapi import FastAPI
+from app.api import media_assets
 
 app = FastAPI()
 
-
-@app.get("/")
-def read_root():
-    return {"message": "creator-dashboard backend is running"}
+app.include_router(media_assets.router)

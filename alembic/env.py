@@ -4,7 +4,7 @@ import sys
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from app.db.base import Base
+from app.core.base import Base
 from app.models import MUser, MMediaType, TMediaAsset, TContentProject
 from dotenv import load_dotenv
 

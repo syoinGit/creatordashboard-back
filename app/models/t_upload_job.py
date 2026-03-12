@@ -1,58 +1,28 @@
 import uuid
 
 from ..core.base import Base
-from sqlalchemy import String, BigInteger, DateTime, ForeignKey, Boolean, func
+from sqlalchemy import String, DateTime, ForeignKey, Boolean, func
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 
 
-class TMediaAsset(Base):
-    __tablename__ = "t_media_assets"
+class TUploadJob(Base):
+    __tablename__ = "t_upload_jobs"
 
-    media_asset_id: Mapped[str] = mapped_column(
+    job_id: Mapped[str] = mapped_column(
         String(36),
         primary_key=True,
         default=lambda: str(uuid.uuid4()),
-        comment="動画素材ID",
+        comment="アップロードジョブID",
     )
-
-    media_type_id: Mapped[str] = mapped_column(
-        String(36),
-        ForeignKey("m_media_types.media_type_id"),
-        nullable=True,
-        comment="素材タイプID",
-    )
-
-    project_id: Mapped[str] = mapped_column(
-        String(36),
-        ForeignKey("t_content_projects.project_id"),
-        nullable=True,
-        comment="動画企画ID",
-    )
-
-    original_file_name: Mapped[str] = mapped_column(
-        String(100), nullable=False, comment="アップロードファイル名"
-    )
-
-    saved_file_name: Mapped[str] = mapped_column(
+    
+    file_name: Mapped[str] = mapped_column(
         String(100), nullable=False, comment="登録ファイル名"
-    )
-
-    mime_type: Mapped[str] = mapped_column(
-        String(100),
-        nullable=True,
-        comment="MIMEタイプ",
     )
 
     storage_path: Mapped[str] = mapped_column(
         String(1000), nullable=False, comment="保存ストレージパス"
     )
-
-    file_size: Mapped[int] = mapped_column(
-        BigInteger, nullable=False, comment="ファイルサイズ"
-    )
-
-    memo: Mapped[str] = mapped_column(String(1000), nullable=True, comment="メモ")
 
     created_user_id: Mapped[str] = mapped_column(
         String(36), ForeignKey("m_users.user_id"), nullable=False, comment="作成者"
